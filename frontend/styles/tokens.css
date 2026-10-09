@@ -1,0 +1,64 @@
+/* tokens.css · Recipe Box */
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+
+:root {
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fs-xs: 0.75rem; --fs-sm: 0.875rem; --fs-base: 1rem;
+  --fs-lg: 1.25rem; --fs-xl: 1.6rem; --fs-2xl: 2.1rem;
+
+  --bg: #f8f9fa; --surface: #ffffff; --sunken: #f1f3f5;
+  --fg: #212529; --fg-2: #495057; --muted: #868e96;
+  --line: #ced4da; --line-soft: #e9ecef;
+  --code-fg: #8f310c; --code-bg: #fff4e6;
+  --ok: #2f9e44; --bad: #e03131;
+
+  --red-1: #ffe3e3; --red-3: #ffa8a8; --red-6: #fa5252; --red-8: #c92a2a;
+  --orange-1: #ffe8cc; --orange-3: #ffc078; --orange-6: #fd7e14; --orange-8: #d9480f;
+  --yellow-1: #fff3bf; --yellow-3: #ffe066; --yellow-6: #f59f00; --yellow-8: #a65d00;
+  --green-1: #d3f9d8; --green-3: #8ce99a; --green-6: #40c057; --green-8: #2b8a3e;
+  --teal-1: #c3fae8; --teal-3: #63e6be; --teal-6: #12b886; --teal-8: #087f5b;
+  --blue-1: #d0ebff; --blue-3: #74c0fc; --blue-6: #228be6; --blue-8: #1864ab;
+  --violet-1: #e5dbff; --violet-3: #b197fc; --violet-6: #845ef7; --violet-8: #6741d9;
+  --grape-1: #f3d9fa; --grape-3: #e599f7; --grape-6: #be4bdb; --grape-8: #862e9c;
+  --pink-1: #ffdeeb; --pink-3: #faa2c1; --pink-6: #e64980; --pink-8: #a61e4d;
+
+  --rainbow: linear-gradient(90deg, var(--red-6) 0 11.11%, var(--orange-6) 0 22.22%, var(--yellow-6) 0 33.33%, var(--green-6) 0 44.44%, var(--teal-6) 0 55.56%, var(--blue-6) 0 66.67%, var(--violet-6) 0 77.78%, var(--grape-6) 0 88.89%, var(--pink-6) 0 100.00%);
+
+  /* default hue */
+  --a1: var(--violet-1); --a3: var(--violet-3); --a6: var(--violet-6); --a8: var(--violet-8);
+  --radius: 2px;
+}
+
+[data-hue="red"] { --a1: var(--red-1); --a3: var(--red-3); --a6: var(--red-6); --a8: var(--red-8); }
+[data-hue="orange"] { --a1: var(--orange-1); --a3: var(--orange-3); --a6: var(--orange-6); --a8: var(--orange-8); }
+[data-hue="yellow"] { --a1: var(--yellow-1); --a3: var(--yellow-3); --a6: var(--yellow-6); --a8: var(--yellow-8); }
+[data-hue="green"] { --a1: var(--green-1); --a3: var(--green-3); --a6: var(--green-6); --a8: var(--green-8); }
+[data-hue="teal"] { --a1: var(--teal-1); --a3: var(--teal-3); --a6: var(--teal-6); --a8: var(--teal-8); }
+[data-hue="blue"] { --a1: var(--blue-1); --a3: var(--blue-3); --a6: var(--blue-6); --a8: var(--blue-8); }
+[data-hue="violet"] { --a1: var(--violet-1); --a3: var(--violet-3); --a6: var(--violet-6); --a8: var(--violet-8); }
+[data-hue="grape"] { --a1: var(--grape-1); --a3: var(--grape-3); --a6: var(--grape-6); --a8: var(--grape-8); }
+[data-hue="pink"] { --a1: var(--pink-1); --a3: var(--pink-3); --a6: var(--pink-6); --a8: var(--pink-8); }
+
+:root, [data-hue] {
+  --accent: var(--a6);
+  --accent-ink: var(--a8);
+  --accent-soft: var(--a1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1d21; --surface: #212529; --sunken: #2a2f34;
+    --fg: #f1f3f5; --fg-2: #ced4da; --muted: #adb5bd;
+    --line: #495057; --line-soft: #343a40;
+    --code-fg: #ffc078; --code-bg: #3a2a1c; --ok: #8ce99a; --bad: #ffa8a8;
+    color-scheme: dark;
+  }
+  :root, [data-hue] {
+    --accent-ink: var(--a3);
+    --accent-soft: color-mix(in srgb, var(--a6) 22%, #212529);
+  }
+}
+
+html { font-family: var(--font-mono); background: var(--bg); color: var(--fg); }

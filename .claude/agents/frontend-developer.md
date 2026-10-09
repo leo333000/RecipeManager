@@ -23,7 +23,9 @@ If the spec is missing something you need, such as an endpoint shape or a valida
 
 - Use semantic HTML (`header`, `main`, `nav`, `form`, `button`, `label`) and keep pages accessible: every input has a label, images have alt text, everything works with the keyboard, and color contrast is readable.
 - Make pages responsive. They must work on a phone-sized screen without horizontal scrolling.
-- Keep CSS organized: shared variables for colors, spacing and fonts in one place, and no inline styles.
+- Use the design tokens in `frontend/styles/tokens.css` (supplied by Leo; do not change its values) and put layout and components in `frontend/styles/app.css`. No inline styles or `<script>` in HTML: the site's Content-Security-Policy blocks them.
+- Favour minimalism: one primary action per screen, secondary actions in a "More" menu, details behind toggles.
+- Build DOM with the `h()` helper in `frontend/js/dom.js`, and reuse the components in `frontend/js/ui/`.
 - Put API calls in one module (for example `frontend/js/api.js`) that matches the endpoints in the spec exactly. Pages call that module, not `fetch` directly.
 - Handle every state the spec lists: loading, empty, error and success. Show users a clear message when a request fails.
 - Never put API keys or secrets in front-end code. All Claude API calls go through the back end.

@@ -35,7 +35,7 @@ Then write the tests.
 - One behavior per test. Use the Arrange, Act, Assert structure.
 - Tests must be independent and repeatable. Do not rely on test order or shared state.
 - **Never call the real Claude API in unit tests.** Mock the back end's `ai/` module and test both a valid response and the failure cases: invalid JSON, rate limit errors and timeouts.
-- Use an in-memory or temporary test database. Never touch the real database file.
+- Use the in-memory store (`createMemoryStore` in `backend/db/store.js`) and the helpers in `tests/helpers/testApp.js`. Never touch Netlify Blobs.
 - For front-end code, test pure logic (validation, formatting, filtering) directly, and use jsdom for small DOM behaviors.
 - Mirror the source layout, for example `tests/backend/services/recipes.test.js` for `backend/services/recipes.js`.
 

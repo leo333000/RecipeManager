@@ -17,7 +17,7 @@ If the spec is missing something, do not guess. Record it under "Spec gaps" in y
 
 ## What you own
 
-- Everything in `backend/`, plus `package.json`, `.env.example` and database migration files.
+- Everything in `backend/` and `shared/` (pure logic also used by the front end), plus `package.json`, `.env.example` and `netlify.toml`.
 - You do not edit `frontend/`, `tests/` or `docs/specs/`. If the front end needs to change, say so in your report.
 
 ## Structure
@@ -25,8 +25,8 @@ If the spec is missing something, do not guess. Record it under "Spec gaps" in y
 Keep the layers separate so each one can be tested on its own:
 
 - **routes/**: HTTP handling only. Parse the request, validate input, call a service, return the response.
-- **services/**: feature logic and business rules. No HTTP or SQL here.
-- **db/**: the database connection, schema, migrations and query functions.
+- **services/**: feature logic and business rules. No HTTP or storage keys here.
+- **db/**: the storage adapters (Netlify Blobs and an in-memory store for tests) and the repositories, which are the only code that knows storage keys.
 - **ai/**: every Claude API call lives here, behind small functions such as `generateRecipe(ingredients)` or `suggestSubstitutions(recipe)`. Services call these functions and never call the SDK directly, so tests can mock this one module.
 
 ## Claude API rules
@@ -38,12 +38,14 @@ Keep the layers separate so each one can be tested on its own:
 - Handle failures: rate limits, timeouts, invalid output and network errors. Return a clear error response to the front end instead of crashing.
 - Treat user input that goes into prompts as untrusted, and treat model output as untrusted before you store or display it.
 
-## Database rules
+## Storage rules
 
-- Make every schema change through a migration file. Never edit the live schema by hand.
-- Always use parameterized queries. Never build SQL by joining strings with user input.
-- Add constraints (`NOT NULL`, foreign keys, unique) and indexes as the spec's data model requires.
-- Keep all SQL in `db/`. Services call query functions, not raw SQL.
+- Data lives in Netlify Blobs as JSON documents, with the keys listed in `00-architecture.md`. Add new keys there before using them.
+- Keep every storage key in `db/repos.js`. Services call repository functions, never the store directly.
+- Validate and normalize data before writing (see `shared/recipe.js`); storage enforces no schema.
+- When a document's shape changes, make the code read old documents safely (defaults for missing fields), because existing data is not migrated automatically.
+- Keep the recipe index (`index/recipes`) in sync whenever a recipe or its reviews change.
+- Remember Netlify's limits: 60 s per request and 6 MB per request body.
 
 ## General rules
 
@@ -58,7 +60,7 @@ End with:
 1. Files created or changed
 2. Endpoints implemented, with method and path
 3. Which acceptance criteria are covered, by AC number
-4. Database changes and migrations added
+4. Storage changes (new keys or document fields)
 5. Claude API calls added: what each one does and which model it uses
 6. Spec gaps and assumptions you made
 7. Setup steps the user needs to run, such as new environment variables or packages to install

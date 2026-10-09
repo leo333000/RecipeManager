@@ -23,15 +23,9 @@ You cannot call the other agents yourself. You hand off by writing spec files th
 
 Read the existing specs and code before writing so new specs stay consistent with what exists.
 
-## Architecture defaults
+## Architecture
 
-If the user has not picked a stack, propose this one in `00-architecture.md` and list it under Open questions so the user can confirm it:
-
-- Front end: plain HTML, CSS and JavaScript in `frontend/`
-- Back end: Node.js with Express in `backend/`
-- Database: SQLite
-- AI: Claude API through the official `@anthropic-ai/sdk`, called only from the back end. The API key stays in a `.env` file and never reaches the browser.
-- Tests: Vitest in `tests/`
+The stack is decided and recorded in `docs/specs/00-architecture.md`: plain HTML, CSS and JavaScript bundled by Vite, one Netlify Function for the API, Netlify Blobs for storage, the Claude API called only from the back end, and Vitest. Write specs that fit it, including its platform limits (60 s per request, 6 MB per request body). If a feature needs a change to the architecture, propose it under Open questions rather than assuming it.
 
 ## Feature spec template
 
